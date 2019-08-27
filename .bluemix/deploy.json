@@ -92,6 +92,20 @@
             },
             "type": "string",
             "pattern": "\\S"
+        },
+        "img-name": {
+            "description": {
+                "$ref": "#/messages/deploy.imgNameDescription"
+            },
+            "type": "string",
+            "pattern": "^[a-z0-9_]"
+        },
+        "app-port": {
+            "description": {
+                "$ref": "#/messages/deploy.appPortDescription"
+            },
+            "type": "string",
+            "pattern": "^[0-9]"
         }
     },
     "required": ["app-name", "app-port", "img-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
