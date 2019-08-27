@@ -20,7 +20,7 @@ template:
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
 toolchain:
-  name: 'kube-toolchain-{{timestamp}}'
+  name: 'knative-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
@@ -52,6 +52,8 @@ services:
         env:
           GIT_REPO: repo
           APP_NAME: '{{form.pipeline.parameters.app-name}}'
+          IMAGE_NAME: '{{form.pipeline.parameters.img-name}}'
+          APP_PORT: '{{form.pipeline.parameters.app-port}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
@@ -66,6 +68,8 @@ form:
   pipeline:
     parameters:
       app-name: '{{services.repo.parameters.repo_name}}'
+      img-name: 'hellocontainers{{timestamp}}'
+      app-port: '3000'
       prod-cluster-namespace: prod
     schema:
       $ref: deploy.json
