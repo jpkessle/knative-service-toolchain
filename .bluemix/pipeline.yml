@@ -1,11 +1,17 @@
 ---
 defaultBaseImageVersion: latest
+properties:
+- name: IBM_CLOUD_API_KEY
+  value: ${API_KEY}
+  type: secure
 stages:
 - name: Build Stage
   inputs:
   - type: git
     branch: master
-    service: ${REPO}
+    service: ${GIT_REPO}
+  triggers:
+  - type: commit
   properties:
   - name: IMAGE_NAME
     value: ${IMAGE_NAME}
@@ -19,7 +25,7 @@ stages:
   jobs:
   - name: Build
     type: builder
-    build_type: cr
+    build_type: shell
     artifact_dir: ''
     target:
       region_id: ${REGION_ID}
@@ -111,6 +117,8 @@ stages:
   - type: job
     stage: Build Stage
     job: Build
+  triggers:
+  - type: stage
   properties:
   - name: buildProperties
     value: build.properties
@@ -121,8 +129,6 @@ stages:
   - name: SERVICE_FILE
     value: service.yml
     type: text
-  triggers:
-  - type: stage
   jobs:
   - name: Deploy
     type: deployer
