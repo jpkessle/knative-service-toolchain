@@ -132,6 +132,7 @@ stages:
   jobs:
   - name: Deploy
     type: deployer
+    deploy_type: kubernetes
     target:
       application: ${CF_APP}
       api_key: ${API_KEY}
@@ -258,18 +259,3 @@ stages:
         echo "Could not reach health endpoint: $APPLICATION_URL/health"
         exit 1;
       fi;
-  jobs:
-  - name: Test
-    type: tester
-    script: |-
-      #!/bin/sh
-      apk add --no-cache curl
-      if [ "$(curl -is http://{{manifest.host}}.{{manifest.domain}}/health  --connect-timeout 3 --max-time 5 --retry 3 --retry-max-time 30 | head -n 1 | grep 200)" != "" ]; then
-        echo "Successfully reached health endpoint at http://{{manifest.host}}.{{manifest.domain}}/health"
-        echo "====================================================================="
-      else
-        echo "Could not reach health endpoint: http://{{manifest.host}}.{{manifest.domain}}/health"
-        exit 1;
-      fi;
-    test_type: customimage
-    docker_image: alpine
