@@ -28,7 +28,7 @@ stages:
     build_type: cr
     artifact_dir: ''
     target:
-      region_id: ${REGION_ID}
+      region_id: ${REGISTRY_REGION_ID}
       api_key: ${API_KEY}
     namespace: ${REGISTRY_NAMESPACE}
     image_name: ${IMAGE_NAME}
@@ -136,7 +136,7 @@ stages:
     target:
       application: ${CF_APP}
       api_key: ${API_KEY}
-      region_id: ${REGION_ID}
+      region_id: ${REGISTRY_REGION_ID}
       kubernetes_cluster: ${KUBE_CLUSTER_NAME}
     script: |-
       #!/bin/bash
@@ -241,7 +241,7 @@ stages:
     type: deployer
     deploy_type: kubernetes
     target:
-      region_id: ${REGION_ID}
+      region_id: ${REGISTRY_REGION_ID}
       api_key: ${API_KEY}
       kubernetes_cluster: ${KUBE_CLUSTER_NAME}
     script: |-
