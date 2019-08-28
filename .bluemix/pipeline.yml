@@ -28,7 +28,7 @@ stages:
     build_type: cr
     artifact_dir: ''
     target:
-      region_id: ${REGISTRY_REGION_ID}
+      region_id: ${PROD_REGION_ID}
       api_key: ${API_KEY}
     namespace: ${REGISTRY_NAMESPACE}
     image_name: ${IMAGE_NAME}
@@ -136,8 +136,8 @@ stages:
     target:
       application: ${CF_APP}
       api_key: ${API_KEY}
-      region_id: ${REGISTRY_REGION_ID}
-      kubernetes_cluster: ${KUBE_CLUSTER_NAME}
+      region_id: ${PROD_REGION_ID}
+      kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |-
       #!/bin/bash
       export PATH="downloads:$PATH"
@@ -241,9 +241,9 @@ stages:
     type: deployer
     deploy_type: kubernetes
     target:
-      region_id: ${REGISTRY_REGION_ID}
+      region_id: ${PROD_REGION_ID}
       api_key: ${API_KEY}
-      kubernetes_cluster: ${KUBE_CLUSTER_NAME}
+      kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |-
       export PATH="downloads:$PATH"
       kubectl get ksvc/${IMAGE_NAME} -o json | jq '.status.url'
