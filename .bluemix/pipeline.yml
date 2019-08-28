@@ -25,7 +25,7 @@ stages:
   jobs:
   - name: Build
     type: builder
-    build_type: shell
+    build_type: cr
     artifact_dir: ''
     target:
       region_id: ${REGION_ID}
@@ -222,8 +222,8 @@ stages:
 - name: Health Stage
   inputs:
   - type: job
-    stage: Build Stage
-    job: Build
+    stage: Deploy Stage
+    job: Deploy
   triggers:
   - type: stage
   permission:
