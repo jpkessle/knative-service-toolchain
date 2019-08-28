@@ -124,7 +124,7 @@ stages:
     value: build.properties
     type: file
   - name: CLUSTER_NAMESPACE
-    value: ${CLUSTER_NAMESPACE}
+    value: ${PROD_CLUSTER_NAMESPACE}
     type: text
   - name: SERVICE_FILE
     value: service.yml
@@ -231,7 +231,7 @@ stages:
     execute: TOOLCHAIN_ADMINS
   properties:
   - name: CLUSTER_NAMESPACE
-    value: ${CLUSTER_NAMESPACE}
+    value: ${PROD_CLUSTER_NAMESPACE}
     type: text
   - name: buildProperties
     value: build.properties
