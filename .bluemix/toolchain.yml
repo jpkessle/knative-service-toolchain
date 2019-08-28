@@ -70,6 +70,6 @@ form:
       app-name: '{{services.repo.parameters.repo_name}}'
       img-name: 'knativehellocontainers{{timestamp}}'
       app-port: '80'
-      prod-cluster-namespace: prod
+      prod-cluster-namespace: default
     schema:
       $ref: deploy.json

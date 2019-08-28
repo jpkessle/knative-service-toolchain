@@ -1,0 +1,13 @@
+---
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: myappimage
+  namespace: prod
+spec:
+  template:
+    spec:
+      containers:
+        - image: us.icr.io/gvdevxknative/myappimage
+          ports:
+            - containerPort: 80
