@@ -170,7 +170,7 @@ stages:
 
 
       # Deploy the most recent revision of the specified image
-      sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g; s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g; s/IMAGE_NAME/${IMAGE_NAME}/g; s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g s/APP_PORT/${APP_PORT}/g" ${SERVICE_FILE} | kubectl apply -f -
+      sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" ${SERVICE_FILE} | kubectl apply -f -
 
 
       echo "Checking if application is ready..."
