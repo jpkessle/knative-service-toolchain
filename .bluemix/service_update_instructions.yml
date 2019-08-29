@@ -1,3 +1,3 @@
 metadata.name: IMAGE_NAME
-spec.template.spec.containers[0].image: REGISTRY_URL/REGISTRY_NAMESPACE/IMAGE_NAME
-spec.template.spec.containers[0].ports[0].containerPort: APP_PORT
+spec.template.spec.containers[*].image: REGISTRY_URL/REGISTRY_NAMESPACE/IMAGE_NAME
+spec.template.spec.containers[*].ports[*].containerPort: APP_PORT
