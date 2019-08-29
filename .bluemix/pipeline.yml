@@ -258,23 +258,6 @@ stages:
 
       echo "export IP_ADDR=${IP_ADDR}" >> kube_vars.sh
       echo "export PORT=${PORT}" >> kube_vars.sh
-- name: Health Stage
-  inputs:
-  - type: job
-    stage: Build Stage
-    job: Build
-  triggers:
-  - type: stage
-  permission:
-    execute: TOOLCHAIN_ADMINS
-  properties:
-  - name: CLUSTER_NAMESPACE
-    value: ${PROD_CLUSTER_NAMESPACE}
-    type: text
-  - name: buildProperties
-    value: build.properties
-    type: file
-  jobs:
   - name: Test
     type: deployer
     deploy_type: kubernetes
