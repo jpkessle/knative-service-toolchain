@@ -1,4 +1,4 @@
-# ![Icon](./.bluemix/knative.png) Develop a Knative app
+# ![Icon](./.bluemix/knative.svg) Develop a Knative app
 
 
 ### Continuously deliver a secure Knative container app to a Kubernetes Cluster
