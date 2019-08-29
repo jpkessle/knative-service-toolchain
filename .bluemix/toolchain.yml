@@ -7,7 +7,7 @@ template:
   description:
     $ref: "#/messages/template.description"
   header: '![](toolchain.svg?localize)'
-  icon: secure-lock-kubernetes.svg
+  icon: knative.svg
   required:
     - build
     - repo
