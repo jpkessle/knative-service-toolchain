@@ -178,11 +178,26 @@ stages:
         echo -e "Cluster role binding created."
       fi
 
+      #Update service.yml with image name
+      echo "=========================================================="
+      echo "CHECKING SERVICE.YML manifest"
+      if [ ! -f ${SERVICE_FILE} ]; then
+        echo -e "Knative service file '${SERVICE_FILE}' not found. It will be generated."
+        echo "${SERVICE_FILE_TEMPLATE}" | sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" > ${SERVICE_FILE}
+      else
+        echo "UPDATING service manifest with image information"
+        IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+        echo -e "Updating ${SERVICE_FILE} with image name: ${IMAGE_REPOSITORY}"
+        NEW_SERVICE_FILE=tmp.${SERVICE_FILE}
+        cat $SERVICE_FILE | yq write --doc 0 - "spec.template.spec.containers[0].image" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}" > ${NEW_SERVICE_FILE}
+        SERVICE_FILE=${NEW_SERVICE_FILE} # use modified file
+      fi
 
-      echo "${SERVICE_FILE_TEMPLATE}" | sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" > ${SERVICE_FILE}
-      echo "Knative service yaml file:"
-      cat ${SERVICE_FILE}
+
       # Deploy the most recent revision of the specified image
+      echo "=========================================================="
+      cat ${SERVICE_FILE}
+      echo "Deploying Knative service..."
       kubectl apply -f ${SERVICE_FILE}
 
 
