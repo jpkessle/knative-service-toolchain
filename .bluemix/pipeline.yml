@@ -199,7 +199,7 @@ stages:
         IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
         echo -e "Updating ${SERVICE_FILE} with image name: ${IMAGE_REPOSITORY}"
         NEW_SERVICE_FILE=tmp.${SERVICE_FILE}
-        cat $SERVICE_FILE | yq write --doc 0 -s ${SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE} > ${NEW_SERVICE_FILE}
+        yq write --doc 0 -s ${SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE} ${SERVICE_FILE} > ${NEW_SERVICE_FILE}
         SERVICE_FILE=${NEW_SERVICE_FILE} # use modified file
       fi
 
