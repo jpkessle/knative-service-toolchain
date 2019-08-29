@@ -126,6 +126,10 @@ stages:
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text
+  - name: SERVICE_FILE_TEMPLATE
+    value:
+      $text: service.yml.template
+    type: text
   - name: SERVICE_FILE
     value: service.yml
     type: text
@@ -168,23 +172,8 @@ stages:
         echo -e "Cluster role binding created."
       fi
 
-      SERVICE_FILE_TEMPLATE=service_template.yml
-      cat > ${SERVICE_FILE_TEMPLATE} <<- END
-      ---
-      apiVersion: serving.knative.dev/v1alpha1
-      kind: Service
-      metadata:
-        name: IMAGE_NAME
-        namespace: CLUSTER_NAMESPACE
-      spec:
-        template:
-          spec:
-            containers:
-              - image: REGISTRY_URL/REGISTRY_NAMESPACE/IMAGE_NAME
-                ports:
-                  - containerPort: APP_PORT
-      END
-      sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" ${SERVICE_FILE_TEMPLATE} > ${SERVICE_FILE}
+
+      echo "${SERVICE_FILE_TEMPLATE}" | sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" > ${SERVICE_FILE}
       echo "Knative service yaml file:"
       cat ${SERVICE_FILE}
       # Deploy the most recent revision of the specified image
