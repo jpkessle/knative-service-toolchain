@@ -229,7 +229,7 @@ stages:
       fi
       echo "Application is available"
       echo "=========================================================="
-      echo -e "View the application health at: http://$APPLICATION_URL/health"
+      echo -e "View the application at: http://$APPLICATION_URL"
 
       echo "export IP_ADDR=${IP_ADDR}" >> kube_vars.sh
       echo "export PORT=${PORT}" >> kube_vars.sh
@@ -265,10 +265,10 @@ stages:
       TEMP_URL=${TEMP_URL#\"} # remove beginning quote
       export APPLICATION_URL=$TEMP_URL
 
-      if [ "$(curl -is $APPLICATION_URL/health --connect-timeout 3 --max-time 5 --retry 2 --retry-max-time 30 | head -n 1 | grep 200)" != "" ]; then
-        echo "Successfully reached health endpoint at $APPLICATION_URL/health"
+      if [ "$(curl -is $APPLICATION_URL --connect-timeout 3 --max-time 5 --retry 2 --retry-max-time 30 | head -n 1 | grep 200)" != "" ]; then
+        echo "Successfully reached health endpoint at $APPLICATION_URL"
         echo "====================================================================="
       else
-        echo "Could not reach health endpoint: $APPLICATION_URL/health"
+        echo "Could not reach health endpoint: $APPLICATION_URL"
         exit 1;
       fi;
