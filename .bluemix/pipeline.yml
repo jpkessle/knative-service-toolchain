@@ -136,8 +136,15 @@ stages:
     value:
       $text: service.yml.template
     type: text
+  - name: SERVICE_FILE_UPDATE_INSTRUCTIONS
+    value:
+      $text: service_update_instructions.yml
+    type: text
   - name: SERVICE_FILE
     value: service.yml
+    type: text
+  - name: SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE
+    value: service_update_instructions.yml
     type: text
   jobs:
   - name: Deploy
@@ -178,7 +185,7 @@ stages:
         echo -e "Cluster role binding created."
       fi
 
-      #Update service.yml with image name
+      #Update service.yml with service and image name
       echo "=========================================================="
       echo "CHECKING SERVICE.YML manifest"
       if [ ! -f ${SERVICE_FILE} ]; then
@@ -186,10 +193,13 @@ stages:
         echo "${SERVICE_FILE_TEMPLATE}" | sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/CLUSTER_NAMESPACE/${CLUSTER_NAMESPACE}/g" -e "s/APP_PORT/${APP_PORT}/g" > ${SERVICE_FILE}
       else
         echo "UPDATING service manifest with image information"
+        echo "${SERVICE_FILE_UPDATE_INSTRUCTIONS}" | sed -e "s/REGISTRY_URL/${REGISTRY_URL}/g" -e "s/REGISTRY_NAMESPACE/${REGISTRY_NAMESPACE}/g" -e "s/IMAGE_NAME/${IMAGE_NAME}/g" -e "s/APP_PORT/${APP_PORT}/g" > ${SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE}
+        echo "Service file update instructions:"
+        cat ${SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE}
         IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
         echo -e "Updating ${SERVICE_FILE} with image name: ${IMAGE_REPOSITORY}"
         NEW_SERVICE_FILE=tmp.${SERVICE_FILE}
-        cat $SERVICE_FILE | yq write --doc 0 - "spec.template.spec.containers[0].image" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}" > ${NEW_SERVICE_FILE}
+        cat $SERVICE_FILE | yq write --doc 0 -s ${SERVICE_FILE_UPDATE_INSTRUCTIONS_FILE} > ${NEW_SERVICE_FILE}
         SERVICE_FILE=${NEW_SERVICE_FILE} # use modified file
       fi
 
