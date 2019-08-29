@@ -16,6 +16,9 @@ stages:
   - name: IMAGE_NAME
     value: ${IMAGE_NAME}
     type: text
+  - name: APP_PORT
+    value: ${APP_PORT}
+    type: text
   - name: KUBECTL_VERSION
     value: v1.13.3
     type: text
@@ -46,6 +49,7 @@ stages:
       echo "IMAGE_NAME=${IMAGE_NAME}"
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
+      echo "APP_PORT=${APP_PORT}"
 
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
@@ -94,6 +98,8 @@ stages:
       # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
       echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}" >> $ARCHIVE_DIR/build.properties
+      echo "APP_PORT=${APP_PORT}" >> $ARCHIVE_DIR/build.properties
+
       echo "File 'build.properties' created for passing env variables to subsequent pipeline jobs:"
       cat $ARCHIVE_DIR/build.properties
 
