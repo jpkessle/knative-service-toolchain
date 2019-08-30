@@ -20,7 +20,7 @@ template:
         "(" + $env.repository +
           "/tree/" + $env.branch + ")"
 toolchain:
-  name: 'knative-toolchain-{{timestamp}}'
+  name: 'knative-serving-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
@@ -29,13 +29,13 @@ services:
     service_id: >
       $env.source_provider ? $env.source_provider : 'hostedgit'
     parameters:
-      repo_name: 'knative-hello-containers-{{timestamp}}'
+      repo_name: 'hello-knative-serving-containers-{{timestamp}}'
       repo_url: >
         $env.type === 'link' ? 
-          $env.app_repo : 'https://github.com/gee4vee/hello-knative'
+          $env.app_repo : 'https://github.com/gee4vee/hello-knative-serving'
       source_repo_url: >
         $env.type === 'fork' || $env.type === 'clone' ? 
-          $env.app_repo : 'https://github.com/gee4vee/hello-knative'
+          $env.app_repo : 'https://github.com/gee4vee/hello-knative-serving'
       type: $env.type || 'clone'
       has_issues: true
       enable_traceability: true
@@ -68,7 +68,7 @@ form:
   pipeline:
     parameters:
       app-name: '{{services.repo.parameters.repo_name}}'
-      img-name: 'knativehellocontainers{{timestamp}}'
+      img-name: 'helloknativeservingcontainers{{timestamp}}'
       app-port: '80'
       prod-cluster-namespace: default
     schema:
