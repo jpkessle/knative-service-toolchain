@@ -9,5 +9,6 @@ spec:
     spec:
       containers:
         - image: REGISTRY_URL/REGISTRY_NAMESPACE/IMAGE_NAME
+          imagePullPolicy: Always
           ports:
             - containerPort: APP_PORT
