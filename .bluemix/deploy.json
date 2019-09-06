@@ -91,13 +91,6 @@
                 "$ref": "#/messages/deploy.appDescription"
             },
             "type": "string",
-            "pattern": "\\S"
-        },
-        "img-name": {
-            "description": {
-                "$ref": "#/messages/deploy.imgNameDescription"
-            },
-            "type": "string",
             "pattern": "^[a-z0-9_]"
         },
         "app-port": {
@@ -108,7 +101,7 @@
             "pattern": "^[0-9]"
         }
     },
-    "required": ["app-name", "app-port", "img-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
+    "required": ["app-name", "app-port", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
     "form": [{
             "type": "validator",
             "url": "/devops/validator/validator-v1.html"
@@ -119,14 +112,7 @@
                 "$ref": "#/messages/deploy.appName"
             },
             "key": "app-name"
-        },  {
-            "type": "text",
-            "readonly": false,
-            "title": {
-                "$ref": "#/messages/deploy.imgName"
-            },
-            "key": "img-name"
-        },{
+        }, {
             "type": "text",
             "readonly": false,
             "title": {

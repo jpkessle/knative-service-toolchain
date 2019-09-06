@@ -52,7 +52,7 @@ services:
         env:
           GIT_REPO: repo
           APP_NAME: '{{form.pipeline.parameters.app-name}}'
-          IMAGE_NAME: '{{form.pipeline.parameters.img-name}}'
+          IMAGE_NAME: '{{form.pipeline.parameters.app-name}}'
           APP_PORT: '{{form.pipeline.parameters.app-port}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
@@ -68,7 +68,6 @@ form:
   pipeline:
     parameters:
       app-name: '{{services.repo.parameters.repo_name}}'
-      img-name: 'helloknativeservingcontainers{{timestamp}}'
       app-port: '80'
       prod-cluster-namespace: default
     schema:
