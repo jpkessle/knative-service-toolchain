@@ -1,7 +1,7 @@
 # ![Icon](./.bluemix/knative.svg) Developing a Knative Service app
 
 ## How Knative deployment works
-The application code is stored in source control, along with its Dockerfile and Knative service script. The target cluster is configured during toolchain setup by using an IBM Cloud API key and cluster name. You can update them at any time by altering the Delivery Pipeline configuration. Any code changes detected in the Git repo are automatically built, validated, and deployed into the Kubernetes cluster.
+The application code is stored in source control, along with its Dockerfile and Knative service definition. If your app doesn't have a Knative service definition, the toolchain automatically generates one during deployment. The target cluster is configured during toolchain setup by using an IBM Cloud API key and cluster name. You can update them at any time by altering the Delivery Pipeline configuration. Any code changes detected in the Git repo are automatically built, validated, and deployed into the Kubernetes cluster.
 
 ![Icon](./.bluemix/toolchain.png)
 
